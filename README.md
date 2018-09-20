@@ -58,7 +58,7 @@ ___
 _Elaborate on how JSON or XML supports communication between subsystems, even when the subsystems are implemented on different platforms._
 
 JSON or XML supports communication between subsystems, even when the subsystems are implemented on different platform, because 
-these formats are standardized. Because XML and JSON are defined standards, all servers, clients and libraries know how 
+these formats are standardized. Because XML and JSON are defined standards, all servers, clients and libraries agree on how
 XML or JSON are formatted.
 
 To use XML or JSON on a _new_ platform, all you need is a library that implements the specification of the data transfer language.
