@@ -3,11 +3,11 @@ ___
 
 _Elaborate on some of the characteristics of REST, like: Stateless, Cacheable, Layered System, Uniform Interface etc._
 
-######Stateless
+##### Stateless
 REST is stateless, meaning that no state is maintained by the server between requests. The burden of 
 maintaining state falls on the client application instead.
 
-######Cachable
+##### Cachable
 Cachable refers to the ability to cache responses made to a server. REST APIs are often more cachable
 than traditional websites, because only pure data is sent to the client. 
 
@@ -20,13 +20,13 @@ of the administrator is displayed on the page.
 Using a single page application with a REST API, all calls to the endpoint that provides the users, can be cached. And
 the username of the authenticated administrator can be displayed by the client application.
 
-####Layered System
+##### Layered System
 
 Layered systems are systems where concerns are separated into individual layers. REST APIs can be deployed to a server, 
 and multiple client applications can use the same REST API. This separates the concerns of retrieving and displaying 
 data into different layers.
  
-#####Uniform Interface
+##### Uniform Interface
 
 Describes the standards that allow operations on resources in REST. The uniform interface constraint defines the 
 interface between clients and servers. It simplifies and decouples the architecture, which enables each part to evolve 
@@ -36,7 +36,7 @@ Individual resources are identified in requests using URIs as resource identifie
 conceptually separate from the representations that are returned to the client. For example, the server does not send 
 its database, but rather, some HTML, XML or JSON that represents some database records.
 
-#####Client-Server
+##### Client-Server
 
 The client-server architecture is when a client sends requests to servers, and servers respond to requests made by clients.
 
