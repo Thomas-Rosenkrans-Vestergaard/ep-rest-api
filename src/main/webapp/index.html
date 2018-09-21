@@ -23,92 +23,80 @@
 <body>
 <div id="container">
     <h1>Pet Hospital</h1>
-    <table id="pets">
-        <thead>
-        <tr>
-        </tr>
-        </thead>
-        <tbody>
 
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#pets">Pets</a></li>
+                <li class="tab col s3"><a href="#owners">Owners</a></li>
+                <li class="tab col s3"><a href="#events">Events</a></li>
+            </ul>
+        </div>
+        <div id="pets" class="col s12">
+            <table id="table-pets">
+
+            </table>
+        </div>
+        <div id="owners" class="col s12">
+            <table id="table-owners">
+
+            </table>
+        </div>
+        <div id="events" class="col s12">
+            <table id="table-events">
+
+            </table>
+        </div>
+    </div>
 </div>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script>
+    M.AutoInit();
+</script>
+<script type="text/javascript" src="js/RestTable.js"></script>
 <script>
 
-    var columns = [
-        {
-            name: "ID",
-            class: "pet-id",
-            key: "id"
+    var petsTable = new RestTable(document.getElementById("table-pets"), {
+
+        getter: function (callback) {
+            return fetch("api/pet").then(function (response) {
+                return response.json();
+            }).then(function (pets) {
+                callback(pets);
+            });
         },
-        {
-            name: "Name",
-            class: "pet-name",
-            key: "name"
-        },
-        {
-            name: "Species",
-            class: "pet-species",
-            key: "species"
-        },
-        {
-            name: "Birth",
-            class: "pet-birth",
-            key: "birth"
-        },
-        {
-            name: "Death",
-            class: "pet-death",
-            key: "death"
-        }
-    ];
+        columns: [
+            {
+                name: "ID",
+                class: "pet-id",
+                key: "id"
+            },
+            {
+                name: "Name",
+                class: "pet-name",
+                key: "name"
+            },
+            {
+                name: "Species",
+                class: "pet-species",
+                key: "species"
+            },
+            {
+                name: "Birth",
+                class: "pet-birth",
+                key: "birth"
+            },
+            {
+                name: "Death",
+                class: "pet-death",
+                key: "death"
+            }
+        ]
+    });
 
-    function populateHeaders() {
-        var tr = document.querySelector("#pets thead tr");
-        columns.forEach(function (column) {
-            var th = document.createElement("th");
-            th.innerText = column.name;
-            if (column.class != undefined)
-                th.setAttribute("class", column.class);
+    petsTable.init();
 
-            tr.appendChild(th);
-        });
-    }
 
-    function populate() {
-        fetch('api/pet').then(function (response) {
-            return response.json();
-        }).then(function (pets) {
-            appendPets(pets);
-        });
-    }
-
-    function appendPets(pets) {
-        var tbody = document.querySelector("#pets tbody");
-        pets.forEach(function (pet) {
-            appendPet(tbody, pet);
-        });
-    }
-
-    function appendPet(tbody, pet) {
-
-        var tr = document.createElement("tr");
-
-        columns.forEach(function (column) {
-            var td = document.createElement("td");
-            td.innerText = column.value == undefined ? pet[column.key] : column.value.call(pet[column.key], pet, column);
-            if (column.class != undefined)
-                td.setAttribute("class", column.class);
-
-            tr.appendChild(td);
-        });
-
-        tbody.appendChild(tr);
-    }
-
-    populateHeaders();
-    populate();
 </script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
 </html>

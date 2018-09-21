@@ -8,17 +8,16 @@ REST is stateless, meaning that no state is maintained by the server between req
 maintaining state falls on the client application instead.
 
 ##### Cachable
-Cachable refers to the ability to cache responses made to a server. REST APIs are often more cachable
-than traditional websites, because only pure data is sent to the client. 
+Cachable refers to the ability to cache responses made to a server. REST APIs are often more cachable than 
+traditional websites, because only pure data is sent to the client. The reason for this is that REST systems separate
+ pure data, and features unique to individual users, such as html pages unique to authenticated users. 
 
-An example of this could be a website where an administrator can view a list of users. The username of the authenticated 
-administrator is displayed on the page.
+Using a __traditional web-application__ requests to the page cannot be cached to multiple administrators since the 
+username of the administrator is displayed on the page, making the html unique to that administrator.
 
-Using a traditional web-application requests to the page cannot be cached to multiple administrators since the username
-of the administrator is displayed on the page.
-
-Using a single page application with a REST API, all calls to the endpoint that provides the users, can be cached. And
-the username of the authenticated administrator can be displayed by the client application.
+Using a __single page application with a REST API__, all calls to the endpoint that provides the users, can be cached.
+ And the username of the authenticated administrator can be displayed by the client application. The REST API has 
+ successfully separated pure data and features unique to individual users, in this case the username on the page.
 
 ##### Layered System
 
