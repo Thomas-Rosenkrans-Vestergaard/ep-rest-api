@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pets</title>
+</head>
+<body>
+<table id="pets">
+    <thead>
+    <tr>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<script>
+
+    var columns = [
+        {
+            name: "ID",
+            class: "pet-id",
+            key: "id"
+        },
+        {
+            name: "Name",
+            class: "pet-name",
+            key: "name"
+        },
+        {
+            name: "Species",
+            class: "pet-species",
+            key: "species"
+        },
+        {
+            name: "Birth",
+            class: "pet-birth",
+            key: "birth"
+        },
+        {
+            name: "Death",
+            class: "pet-death",
+            key: "death"
+        }
+    ];
+
+    function populateHeaders() {
+        var tr = document.querySelector("#pets thead tr");
+        columns.forEach(function (column) {
+            var th = document.createElement("th");
+            th.innerText = column.name;
+            if (column.class != undefined)
+                th.setAttribute("class", column.class);
+
+            tr.appendChild(th);
+        });
+    }
+
+    function populate() {
+        fetch('api/pet').then(function (response) {
+            return response.json();
+        }).then(function (pets) {
+            appendPets(pets);
+        });
+    }
+
+    function appendPets(pets) {
+        var tbody = document.querySelector("#pets tbody");
+        pets.forEach(function (pet) {
+            appendPet(tbody, pet);
+        });
+    }
+
+    function appendPet(tbody, pet) {
+
+        var tr = document.createElement("tr");
+
+        columns.forEach(function (column) {
+            var td = document.createElement("td");
+            td.innerText = column.value == undefined ? pet[column.key] : column.value.call(pet[column.key], pet, column);
+            if (column.class != undefined)
+                td.setAttribute("class", column.class);
+
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    }
+
+    populateHeaders();
+    populate();
+</script>
+</body>
+</html>
