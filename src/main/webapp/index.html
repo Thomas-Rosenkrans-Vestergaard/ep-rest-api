@@ -96,6 +96,46 @@
 
     petsTable.init();
 
+    var eventsTable = new RestTable(document.getElementById("table-events"), {
+        getter: function (callback) {
+            return fetch("api/event").then(function (response) {
+                return response.json();
+            }).then(function (pets) {
+                callback(pets);
+            });
+        },
+        columns: [
+            {
+                name: "ID",
+                class: "event-id",
+                key: "id"
+            },
+            {
+                name: "Event",
+                class: "event-event",
+                key: "event"
+            },
+            {
+                name: "Remark",
+                class: "event-remark",
+                key: "remark"
+            },
+            {
+                name: "Date",
+                class: "event-date",
+                key: "date"
+            },
+            {
+                name: "Pet",
+                class: "event-pet",
+                value: function (event) {
+                    return event['pet']['name'];
+                }
+            }
+        ]
+    });
+
+    eventsTable.init();
 
 </script>
 </body>
