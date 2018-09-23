@@ -2,6 +2,8 @@ package com.tvestergaard.rest.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tvestergaard.rest.api.exceptions.EventNotFoundException;
+import com.tvestergaard.rest.api.exceptions.PetNotFoundException;
 import com.tvestergaard.rest.data.EventRepository;
 import com.tvestergaard.rest.data.JpaEventRepository;
 import com.tvestergaard.rest.data.JpaPetRepository;
@@ -41,11 +43,11 @@ public class EventResource
     @GET
     @Path("{id : [0-9]+}")
     @Produces(APPLICATION_JSON)
-    public Response get(@PathParam("id") int id)
+    public Response get(@PathParam("id") int id) throws Exception
     {
         Event event = repository.get(id);
         if (event == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new EventNotFoundException();
 
         EventDTO eventDTO = new EventDTO(event, true);
         String   json     = gson.toJson(eventDTO);
@@ -55,11 +57,11 @@ public class EventResource
     @GET
     @Path("pet/{pet: [0-9]+}")
     @Produces(APPLICATION_JSON)
-    public Response getFromPet(@PathParam("pet") int pet)
+    public Response getFromPet(@PathParam("pet") int pet) throws Exception
     {
         List<Event> events = repository.getFromPet(pet);
         if (events == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new PetNotFoundException();
 
         String json = gson.toJson(events.stream().map(e -> new EventDTO(e, false)).collect(Collectors.toList()));
         return Response.ok().entity(json).build();

@@ -3,6 +3,7 @@ package com.tvestergaard.rest.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.tvestergaard.rest.api.exceptions.PetNotFoundException;
 import com.tvestergaard.rest.data.JpaPetRepository;
 import com.tvestergaard.rest.data.PetRepository;
 import com.tvestergaard.rest.entities.Pet;
@@ -13,7 +14,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,11 +39,11 @@ public class PetResource
     @GET
     @Path("{id: [0-9]+}")
     @Produces(APPLICATION_JSON)
-    public Response get(@PathParam("id") int id)
+    public Response get(@PathParam("id") int id) throws Exception
     {
         Pet pet = repository.get(id);
         if (pet == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new PetNotFoundException();
 
         PetDTO petDTO = new PetDTO(pet, true, false);
         String json   = gson.toJson(petDTO);
