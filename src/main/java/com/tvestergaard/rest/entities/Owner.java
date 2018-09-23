@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
+@NamedQueries({
+        @NamedQuery(name = "Owner.findAll", query = "SELECT o FROM Owner o"),
+        @NamedQuery(name = "Owner.findById", query = "SELECT o FROM Owner o WHERE o.id = :id")
+})
 @Entity public class Owner
 {
     private int id;

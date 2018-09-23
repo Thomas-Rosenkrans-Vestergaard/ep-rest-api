@@ -137,6 +137,40 @@
 
     eventsTable.init();
 
+    var ownersTable = new RestTable(document.getElementById("table-owners"), {
+        getter: function (callback) {
+            return fetch("api/owner").then(function (response) {
+                return response.json();
+            }).then(function (pets) {
+                callback(pets);
+            });
+        },
+        columns: [
+            {
+                name: "ID",
+                class: "owner-id",
+                key: "id"
+            },
+            {
+                name: "First name",
+                class: "owner-firstName",
+                key: "firstName"
+            },
+            {
+                name: "Last name",
+                class: "owner-lastName",
+                key: "lastName"
+            },
+            {
+                name: "Address",
+                class: "owner-address",
+                key: "address"
+            }
+        ]
+    });
+
+    ownersTable.init();
+
 </script>
 </body>
 </html>
